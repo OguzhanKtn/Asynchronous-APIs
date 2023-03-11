@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const serverStatus = false;
+        const promise = new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                if(serverStatus){
+                    resolve({username:"oguzhankotan"});
+                }else{
+                    reject("login error");
+                }
+            },2000);
+        });
+        promise.then(user =>{
+            console.log(user);
+        }).catch(err=>{
+            console.log(err);
+        })
+
+
+        const login = (username,password)=>{
+            return new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    if(serverStatus){
+                        resolve({username : username, email:"info@oguzhankotan.com"})
+                    }else{
+                        reject("server is offline");
+                    }
+                },1000)
+            })
+        }
+
+        const getPostsByUserName = (username) =>{
+            return new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    resolve(["post1","post2","post3"]);
+                },2000)
+            })
+        }
+
+        const getPostDetails = (post) =>{
+            return new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    resolve("post details");
+                })
+            },1000)
+        }
+
+        // async
+
+        async function displayUser(){
+            try{
+            const user = await login("oguzhankotan","12345");
+            console.log(user);
+
+            const posts = await getPostsByUserName(user.username);
+            console.log(posts);
+
+            const details = await getPostDetails(posts[0]);
+            console.log(details);
+            }
+           catch(err){
+            console.log(err);
+           }
+        }
+
+        displayUser();
+    </script>
+</body>
+</html>
